@@ -2,7 +2,7 @@ import cryptocode
 
 def Enviar(mensagem, segredo, chave):
 
-    segredo = mensagem + segredo
+    segredo = mensagem + str(segredo)
 
     #print(segredo)
 
@@ -12,7 +12,7 @@ def Enviar(mensagem, segredo, chave):
     
     #print(mensagem)
 
-    mensagem = cryptocode.encrypt(mensagem, chave)
+    mensagem = cryptocode.encrypt(mensagem, str(chave))
 
     #print(mensagem)
 
@@ -21,15 +21,21 @@ def Enviar(mensagem, segredo, chave):
 
 def Receber(mensagemCifrada, segredo, chave):
 
-    mensagemCifrada = cryptocode.decrypt(mensagemCifrada, chave)
+    mensagemCifrada = cryptocode.decrypt(mensagemCifrada, str(chave))
+
+    #print(mensagemCifrada)
 
     mensagemCifrada = mensagemCifrada.split('@')
 
-    mensagem, teste = mensagemCifrada
+    #print(mensagemCifrada)
 
-    mensagem = hash(mensagem + segredo)
+    mensagem, hashRecebido = mensagemCifrada
 
-    if str(mensagem) == str(teste):
+    mensagem = hash(mensagem + str(segredo))
+
+    #print(mensagem, teste)
+
+    if str(mensagem) == str(hashRecebido):
       print('Ok! Menssagem recebida com sucesso.')
     else:
       print('Deu ruim...')
